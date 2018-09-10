@@ -170,8 +170,79 @@ def find_moving_averages(df,col_name,col_name_prefix,window_size_list,generate_c
     
     return df,data_col_list
 
+
+
+
+
+def plot_forecasted_validation(data_dict):
+    # Need to work on this
+    ####
+    df_train = data_dict["df_train"] 
+    df_test  = data_dict["df_test"]
+    a_col_name_train = data_dict["a_col_name_train"]
+    a_col_name_test  = data_dict["a_col_name_test"]
+    f_col_name       = data_dict["f_col_name"]
+    time_col         = data_dict["time_col"]
+    y_data_col       = data_dict["y_data_col"]
+    title            = data_dict["title"]
+    file_path        = data_dict["file_path"]
+    hard_save        = data_dict["hard_save"]
+    plot_show        = data_dict["plot_show"]
+    #######
+    
+    fig = plt.gcf()
+    fig.set_size_inches(16.5, 6.5)
+
+    font = {'family': 'serif',
+            'color':  'darkred',
+            'weight': 'bold',
+            'size': 30,
+            }
+    plt.plot(df_train[a_col_name_train],label="Train")
+    plt.plot(df_test[a_col_name_test],label ="Test")
+    plt.plot(df_test[f_col_name],label="Forecasted")
+    
+    
+    
+    plt.xlabel(time_col,fontdict = font )
+    plt.ylabel(y_data_col,fontdict=font)
+    plt.title(title,fontdict=font)
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
+
+    
+    if(os.path.exists(file_path) & (not hard_save)):
+        print("Figure already saved!!!!")
+    else:
+        print("Saving Figure!!!!")
+        plt.savefig(file_path)
+
+
+    if plot_show:
+        plt.show()
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
 ## HELPER FUNCTIONS
 def convert_list_to_str(x):
     res = list(map(str, x))
     new_window='_'.join(res)
     return new_window
+
+
+
+
+
+
+
